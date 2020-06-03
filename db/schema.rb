@@ -27,8 +27,8 @@ ActiveRecord::Schema.define(version: 2020_06_03_192002) do
   create_table "posts", force: :cascade do |t|
     t.string "text"
     t.string "image"
-    t.integer "upvotes"
-    t.integer "downvotes"
+    t.integer "upvotes", default: 0
+    t.integer "downvotes", default: 0
     t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

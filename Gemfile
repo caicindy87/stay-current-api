@@ -47,3 +47,4 @@ gem 'active_model_serializers'
 gem 'rest-client'
 
 gem "jwt"
+
