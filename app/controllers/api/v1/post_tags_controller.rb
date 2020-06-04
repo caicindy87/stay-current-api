@@ -1,4 +1,6 @@
 class Api::V1::PostTagsController < ApplicationController
+  skip_before_action :authorized, only: [:index]
+
   def index
     post_tags = PostTag.all
     render json: post_tags, status: :ok
