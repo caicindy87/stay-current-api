@@ -4,7 +4,11 @@ class Api::V1::PostsController < ApplicationController
 
   def index
     posts = Post.all
-    render json: posts
+    posts_with_converted_created_at_attribute = posts.map do |post| 
+      {id: post.id, text: post.text, image: post.image, upvotes: post.upvotes, downvotes: post.downvotes, user_id: post.user_id, created_at: "#{ActionController::Base.helpers.distance_of_time_in_words(post.created_at, DateTime.now)} ago", updated_at: post.updated_at}
+    end
+
+    render json: posts_with_converted_created_at_attribute
   end
   
   def create
@@ -13,6 +17,10 @@ class Api::V1::PostsController < ApplicationController
 
     if post.valid?
       post.save
+      params[:selected_tags].map do |tag| 
+        PostTag.create(post_id: post.id, tag_id: tag) 
+      end
+
       render json: post, status: :created
     else 
       render json: {error: post.errors.full_messages}, status: :not_acceptable
