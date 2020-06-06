@@ -4,8 +4,11 @@ class Api::V1::PostsController < ApplicationController
 
   def index
     posts = Post.all
+   
     posts_with_converted_created_at_attribute = posts.map do |post| 
-      {id: post.id, text: post.text, image: post.image, upvotes: post.upvotes, downvotes: post.downvotes, user_id: post.user_id, created_at: "#{ActionController::Base.helpers.distance_of_time_in_words(post.created_at, DateTime.now)} ago", updated_at: post.updated_at}
+      publish_date = ActionController::Base.helpers.distance_of_time_in_words(post.created_at, DateTime.now)
+      
+      {post_info: PostSerializer.new(post), publish_date: publish_date}
     end
 
     render json: posts_with_converted_created_at_attribute
@@ -14,21 +17,26 @@ class Api::V1::PostsController < ApplicationController
   def create
     user = User.find(post_params[:user_id])
     post = user.posts.build(post_params)
-
+    
     if post.valid?
       post.save
+      
       params[:selected_tags].map do |tag| 
         PostTag.create(post_id: post.id, tag_id: tag) 
-      end
+      end      
 
-      render json: post, status: :created
+      publish_date = ActionController::Base.helpers.distance_of_time_in_words(post.created_at, DateTime.now)
+
+      render json: {post_info: PostSerializer.new(post), publish_date: publish_date}, status: :created
     else 
       render json: {error: post.errors.full_messages}, status: :not_acceptable
     end
   end
 
   def show
-    render json: @post, status: :ok
+    publish_date = ActionController::Base.helpers.distance_of_time_in_words(@post.created_at, DateTime.now)
+
+    render json: {post_info: PostSerializer.new(@post), publish_date: publish_date}, status: :ok
   end
 
   def update
@@ -36,7 +44,10 @@ class Api::V1::PostsController < ApplicationController
 
     if @post.valid?
       @post.save
-      render json: @post, status: :ok
+     
+      publish_date = ActionController::Base.helpers.distance_of_time_in_words(@post.created_at, DateTime.now)
+
+      render json: {post_info: PostSerializer.new(@post), publish_date: publish_date}, status: :ok
     else 
       render json: {error: post.errors.full_messages}, status: :not_acceptable
     end
