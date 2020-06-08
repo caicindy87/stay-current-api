@@ -49,6 +49,10 @@ class Api::V1::PostsController < ApplicationController
 
     if @post.valid?
       @post.save
+
+      params[:selected_tags].map do |tag| 
+        PostTag.find_or_create_by(post_id: @post.id, tag_id: tag) 
+      end      
      
       publish_date = ActionController::Base.helpers.distance_of_time_in_words(@post.created_at, DateTime.now)
 
