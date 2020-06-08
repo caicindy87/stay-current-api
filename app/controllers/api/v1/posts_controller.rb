@@ -3,8 +3,13 @@ class Api::V1::PostsController < ApplicationController
   skip_before_action :authorized, only: [:index]
 
   def index
-    posts = Post.all
-   
+    if params[:user_id]
+      user = User.find(params[:user_id])
+      posts = user.posts
+    else
+      posts = Post.all
+    end
+
     posts_with_converted_created_at_attribute = posts.map do |post| 
       publish_date = ActionController::Base.helpers.distance_of_time_in_words(post.created_at, DateTime.now)
       
@@ -60,7 +65,7 @@ class Api::V1::PostsController < ApplicationController
   private
 
   def post_params
-    params.require(:post).permit(:text, :image, :user_id)
+    params.require(:post).permit(:text, :image, :user_id, :upvotes, :downvotes)
   end
 
   def find_post
