@@ -7,12 +7,12 @@ Rails.application.routes.draw do
       get '/current_user', to: 'auth#show'
 
       resources :users, only: [:create] do
-        resources :posts, only: [:index, :create, :show, :update, :destroy]
+        resources :posts, only: [:create, :index, :show, :update, :destroy]
       end
 
       resources :posts, only: [:index]
 
-      resources :tags, only: [:create]
+      resources :tags, only: [:index, :create]
 
       resources :post_tags, only: [:index, :create]
 
