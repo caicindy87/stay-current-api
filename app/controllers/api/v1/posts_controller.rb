@@ -26,8 +26,8 @@ class Api::V1::PostsController < ApplicationController
     if post.valid?
       post.save
       
-      params[:selected_tags].map do |tag| 
-        PostTag.create(post_id: post.id, tag_id: tag) 
+      params[:selected_tags_id].map do |tag_id| 
+        PostTag.create(post_id: post.id, tag_id: tag_id) 
       end      
 
       publish_date = ActionController::Base.helpers.distance_of_time_in_words(post.created_at, DateTime.now)
@@ -50,9 +50,16 @@ class Api::V1::PostsController < ApplicationController
     if @post.valid?
       @post.save
 
-      params[:selected_tags].map do |tag| 
-        PostTag.find_or_create_by(post_id: @post.id, tag_id: tag) 
-      end      
+      # handle user adding new tag(s)
+      params[:selected_tags_id].map do |tag_id| 
+        PostTag.find_or_create_by(post_id: @post.id, tag_id: tag_id)
+      end
+
+      # handle user removing tag(s)
+      updated_selected_tag_ids = params[:selected_tags_id]
+      current_selected_tag_ids = @post.post_tags.map {|post_tag| post_tag.tag.id}
+      removed_tags = current_selected_tag_ids - updated_selected_tag_ids
+      removed_tags.each {|tag_id| @post.post_tags.find_by(tag_id: tag_id).destroy}
      
       publish_date = ActionController::Base.helpers.distance_of_time_in_words(@post.created_at, DateTime.now)
 
