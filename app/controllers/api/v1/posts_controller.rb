@@ -70,6 +70,7 @@ class Api::V1::PostsController < ApplicationController
   end
 
   def destroy
+    @post.post_tags.each {|post_tag| post_tag.destroy}
     @post.destroy
   end
 
