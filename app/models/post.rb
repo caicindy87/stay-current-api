@@ -4,6 +4,7 @@ class Post < ApplicationRecord
   has_many :tags, through: :post_tags
 
   validates :text, length: { minimum: 1, maximum: 500 }
+  validates :upvotes, :downvotes, numericality: { greater_than_or_equal_to: 0 }
 
   def self.posts_with_converted_created_at_attribute(posts)
     posts.map do |post| 
