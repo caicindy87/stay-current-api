@@ -1,4 +1,5 @@
-class NewsController < ApplicationController
+class Api::V1::NewsController < ApplicationController
+  skip_before_action :authorized
 
 NEWS_API_KEY = ENV["NEWS_API_KEY"]
 
