@@ -7,13 +7,13 @@ class Api::V1::AuthController < ApplicationController
     if user && user.authenticate(params[:password])
       token = issue_token(user)
 
-      render json: {id: user.id, username: user.username, token: token}
+      render json: {id: user.id, username: user.username, profile_pic: user.profile_pic, bio: user.bio, token: token}, status: :created
     else
       render json: { error: 'Invalid username or password' }, status: :unauthorized
     end
   end
 
   def show
-    render json: {id: current_user.id, username: current_user.username}
+    render json: {id: current_user.id, username: current_user.username, profile_pic: current_user.profile_pic, bio: current_user.bio}
   end
 end

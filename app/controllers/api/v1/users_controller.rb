@@ -8,8 +8,21 @@ class Api::V1::UsersController < ApplicationController
       user.save
       token = issue_token(user)
 
-      render json: {id: user.id, username: user.username, token: token}, status: :created
+      render json: {id: user.id, username: user.username, profile_pic: user.profile_pic, bio: user.bio, token: token}, status: :created
     else 
+      render json: {error: user.errors.full_messages}, status: :not_acceptable
+    end
+  end
+
+  def update
+    user = User.find(params[:id])
+    user.update(user_params)
+
+    if user.valid?
+      user.save
+
+      render json: {id: user.id, username: user.username, profile_pic: user.profile_pic, bio: user.bio, token: token}, status: :accepted
+    else
       render json: {error: user.errors.full_messages}, status: :not_acceptable
     end
   end
@@ -17,6 +30,6 @@ class Api::V1::UsersController < ApplicationController
   private 
   
   def user_params
-    params.require(:user).permit(:username, :password, :password_confirmation, :email)
+    params.require(:user).permit(:username, :password, :password_confirmation, :email, :profile_pic, :bio)
   end
 end
