@@ -39,7 +39,7 @@ class Api::V1::PostsController < ApplicationController
 
     if @post.valid?
       @post.save
-     
+      
       if params[:selected_tags_id]
         # handle user adding new tag(s)
         params[:selected_tags_id].map do |tag_id| 
