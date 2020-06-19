@@ -52,7 +52,7 @@ class Api::V1::PostsController < ApplicationController
 
       render json: {post_info: PostSerializer.new(@post), publish_date: Post.convert_created_at_attribute_to_words(@post)}, status: :ok
     else 
-      render json: {error: post.errors.full_messages}, status: :not_acceptable
+      render json: {error: @post.errors.full_messages}, status: :not_acceptable
     end
   end
 
