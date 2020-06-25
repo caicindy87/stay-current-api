@@ -1,24 +1,36 @@
-# README
+![logo](/public/images/stay_current_logo.png)
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+---
 
-Things you may want to cover:
+Stay Current is a single-page application that allows uers to stay up to date with today’s current events by exploring resources shared by users or top headlines from news sources.
 
-* Ruby version
+## Prerequisites
 
-* System dependencies
+- Ruby version 2.6.1
+- PostgreSQL 12.2
+- Mac OS
 
-* Configuration
+## Installation
 
-* Database creation
+1. Run `bundle install` in the terminal to ensure all the necessary gems in the Gemfile are installed
 
-* Database initialization
+```
+$ bundle install
+```
 
-* How to run the test suite
+2. Run `rails db:create` to make sure database is running
 
-* Services (job queues, cache servers, search engines, etc.)
+3. Run `rails db:migrate` to get the schema
 
-* Deployment instructions
+4. Run `rails db:seed` if you would like to use the tags that I seeded
 
-* ...
+5. Run `rails s` to start the server to run the application
+
+## Contributors
+
+- UX/UI Design team: Sarah Armstrong, Alexandre Ultre, Nida Somani
+
+## Acknowledgements
+
+- UX Designer: Kelly Fung
+- Flatiron School (San Francisco)
