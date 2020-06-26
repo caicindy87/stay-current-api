@@ -5,7 +5,7 @@ class PostSerializer < ActiveModel::Serializer
 
   def image
     if object.image.attached?
-      {url: Rails.application.routes.url_helpers.rails_blob_url(object.image), signed_id: object.image.signed_id}
+      {url: Rails.application.routes.url_helpers.url_for(object.image), signed_id: object.image.signed_id}
     end
   end
 end
