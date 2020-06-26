@@ -2,6 +2,7 @@ class Post < ApplicationRecord
   belongs_to :user
   has_many :post_tags
   has_many :tags, through: :post_tags
+  has_one_attached :image
 
   validates :text, length: { minimum: 1, maximum: 500 }
   validates :upvotes, :downvotes, numericality: { greater_than_or_equal_to: 0 }

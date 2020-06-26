@@ -26,7 +26,6 @@ class ApplicationController < ActionController::API
   end
 
   def current_user
-    
     user ||= User.find_by(id: user_id)
   end
 

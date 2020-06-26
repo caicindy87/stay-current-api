@@ -14,15 +14,22 @@ class Api::V1::PostsController < ApplicationController
   end
   
   def create
+    
     user = User.find(post_params[:user_id])
     post = user.posts.build(post_params)
     
     if post.valid?
       post.save
     
-      params[:selected_tags_id].map do |tag_id| 
-        PostTag.create(post_id: post.id, tag_id: tag_id) 
-      end      
+      # params[:selected_tags_id].map do |tag_id| 
+      #   PostTag.create(post_id: post.id, tag_id: tag_id) 
+      # end      
+
+      if params[:selectedTags]
+        params[:selectedTags].split(",").map{|n| n.to_i}.map do |tag_id|
+          PostTag.create!(post_id: post.id, tag_id: tag_id)
+        end
+      end
 
       render json: {post_info: PostSerializer.new(post), publish_date: Post.convert_created_at_attribute_to_words(post)}, status: :created
     else 
@@ -64,7 +71,7 @@ class Api::V1::PostsController < ApplicationController
   private
 
   def post_params
-    params.require(:post).permit(:text, :image, :user_id, :upvotes, :downvotes)
+    params.permit(:text, :image, :user_id, :upvotes, :downvotes)
   end
 
   def find_post
