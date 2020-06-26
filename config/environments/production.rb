@@ -104,4 +104,5 @@ Rails.application.configure do
   # config.active_record.database_resolver_context = ActiveRecord::Middleware::DatabaseSelector::Resolver::Session
 end
 
+# Add host to link image
 Rails.application.routes.default_url_options[:host] = "http://localhost:3000"

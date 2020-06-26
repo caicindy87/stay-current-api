@@ -14,19 +14,15 @@ class Api::V1::PostsController < ApplicationController
   end
   
   def create
-    
     user = User.find(post_params[:user_id])
     post = user.posts.build(post_params)
     
     if post.valid?
       post.save
     
-      # params[:selected_tags_id].map do |tag_id| 
-      #   PostTag.create(post_id: post.id, tag_id: tag_id) 
-      # end      
-
+      # Create post's tags if user selected tags
       if params[:selectedTags]
-        params[:selectedTags].split(",").map{|n| n.to_i}.map do |tag_id|
+        params[:selectedTags].split(",").map{|string_num| string_num.to_i}.map do |tag_id|
           PostTag.create!(post_id: post.id, tag_id: tag_id)
         end
       end
@@ -47,14 +43,14 @@ class Api::V1::PostsController < ApplicationController
     if @post.valid?
       @post.save
       
-      if params[:selected_tags_id]
+      if params[:selectedTags]
         # handle user adding new tag(s)
-        params[:selected_tags_id].map do |tag_id| 
+        params[:selectedTags].split(",").map{|string_num| string_num.to_i}.map do |tag_id| 
           PostTag.find_or_create_by(post_id: @post.id, tag_id: tag_id)
         end
 
         # handle user removing tag(s)
-        Post.find_removed_tags(params[:selected_tags_id], @post).each {|tag_id| @post.post_tags.find_by(tag_id: tag_id).destroy}
+        Post.find_removed_tags(params[:selectedTags], @post).each {|tag_id| @post.post_tags.find_by(tag_id: tag_id).destroy}
       end
 
       render json: {post_info: PostSerializer.new(@post), publish_date: Post.convert_created_at_attribute_to_words(@post)}, status: :ok
@@ -71,7 +67,7 @@ class Api::V1::PostsController < ApplicationController
   private
 
   def post_params
-    params.permit(:text, :image, :user_id, :upvotes, :downvotes)
+    params.permit(:id, :text, :image, :user_id, :upvotes, :downvotes)
   end
 
   def find_post

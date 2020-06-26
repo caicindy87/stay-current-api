@@ -52,5 +52,6 @@ Rails.application.configure do
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
 end
 
+# Add host to link image
 Rails.application.routes.default_url_options[:host] = "http://localhost:3000"
 

@@ -19,7 +19,8 @@ class Post < ApplicationRecord
     ActionController::Base.helpers.distance_of_time_in_words(post.created_at, DateTime.now)
   end
   
-  def self.find_removed_tags(updated_selected_tag_ids, post)
+  def self.find_removed_tags(selected_tags, post)
+    updated_selected_tag_ids = selected_tags.split(",").map{|string_num| string_num.to_i}
     current_selected_tag_ids = post.post_tags.map {|post_tag| post_tag.tag.id}
     current_selected_tag_ids - updated_selected_tag_ids
   end
