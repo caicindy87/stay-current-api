@@ -14,7 +14,7 @@ class Api::V1::PostsController < ApplicationController
   end
   
   def create
-    user = User.find(post_params[:user_id])
+    user = User.find(params[:user_id])
     post = user.posts.build(post_params)
     
     if post.valid?
