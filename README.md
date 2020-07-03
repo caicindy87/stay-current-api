@@ -4,11 +4,14 @@
 
 Stay Current is a single-page application that allows uers to stay up to date with today’s current events by exploring resources shared by users or top headlines from news sources. Once logged in, users can also share their own resources, articles, tweets, videos, etc. with other users to browse.
 
+[Stay Current Frontend](https://github.com/caicindy87/stay-current-client)
+
 ## Prerequisites
 
 - Ruby version 2.6.1
 - PostgreSQL 12.2
 - API key for NewsAPI
+- Cloudinary account
 
 ## Installation
 

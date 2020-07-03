@@ -4,7 +4,7 @@ class Post < ApplicationRecord
   has_many :tags, through: :post_tags
   has_one_attached :image
 
-  validates :text, length: { minimum: 1, maximum: 500 }
+  validates :text, presence: true, length: { minimum: 1, maximum: 500 }
   validates :upvotes, :downvotes, numericality: { greater_than_or_equal_to: 0 }
 
   # converts all posts' created_at attribute to words for posts#index
