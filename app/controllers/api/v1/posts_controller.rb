@@ -42,7 +42,7 @@ class Api::V1::PostsController < ApplicationController
 
     if @post.valid?
       @post.save
-      # byebug
+
       if params[:selectedTags]
         # handle user adding new tag(s)
         params[:selectedTags].split(",").map{|string_num| string_num.to_i}.map do |tag_id| 
