@@ -48,3 +48,4 @@ gem 'rest-client'
 
 gem "jwt"
 
+gem 'cloudinary'

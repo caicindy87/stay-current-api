@@ -28,8 +28,8 @@ Rails.application.configure do
   # config.action_dispatch.x_sendfile_header = 'X-Sendfile' # for Apache
   # config.action_dispatch.x_sendfile_header = 'X-Accel-Redirect' # for NGINX
 
-  # Store uploaded files on the local file system (see config/storage.yml for options).
-  config.active_storage.service = :local
+  # Store uploaded files to Cloudinary instead of the local file system (see config/storage.yml for options).
+  config.active_storage.service = :cloudinary
 
   # Mount Action Cable outside main process or domain.
   # config.action_cable.mount_path = nil
@@ -103,3 +103,6 @@ Rails.application.configure do
   # config.active_record.database_resolver = ActiveRecord::Middleware::DatabaseSelector::Resolver
   # config.active_record.database_resolver_context = ActiveRecord::Middleware::DatabaseSelector::Resolver::Session
 end
+
+# Add host to link image
+Rails.application.routes.default_url_options[:host] = "http://localhost:3000"
