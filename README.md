@@ -2,9 +2,11 @@
 
 ---
 
-Stay Current is a single-page application that allows uers to stay up to date with today’s current events by exploring resources shared by users or top headlines from news sources. Once logged in, users can also share their own resources, articles, tweets, videos, etc. with other users to browse.
+There are so many resources out there where we can learn about current events. Stay Current is a single-page application that allows uers to stay up to date with today’s current events by exploring resources shared by users or top headlines from news sources. Once logged in, users can also share their own resources, articles, tweets, videos, etc. with other users to browse.
 
 [Stay Current Frontend](https://github.com/caicindy87/stay-current-client)
+
+[Walk-through of Stay Current](https://youtu.be/Wopgwxun5gI)
 
 ## Prerequisites
 
