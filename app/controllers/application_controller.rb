@@ -8,7 +8,9 @@ class ApplicationController < ActionController::API
   def token
     # { 'Authorization': 'Bearer <token>' }
     auth_header = request.headers["Authorization"]
-    token = auth_header.split(" ")[1]
+    if auth_header
+      token = auth_header.split(" ")[1]
+    end
   end
 
   def decoded_token
@@ -22,7 +24,9 @@ class ApplicationController < ActionController::API
   end
 
   def user_id
-    decoded_token[0]["user_id"]
+    if decoded_token
+      decoded_token[0]["user_id"]
+    end
   end
 
   def current_user
