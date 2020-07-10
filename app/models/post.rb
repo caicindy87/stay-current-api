@@ -20,7 +20,7 @@ class Post < ApplicationRecord
   def self.convert_created_at_attribute_to_words(post)
     ActionController::Base.helpers.distance_of_time_in_words(post.created_at, DateTime.now)
   end
-  
+
   # find tags that have been removed in updated post
   def self.find_removed_tags(selected_tags, post)
     updated_selected_tag_ids = selected_tags.split(",").map{|string_num| string_num.to_i}
